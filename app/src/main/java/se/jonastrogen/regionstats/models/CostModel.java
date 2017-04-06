@@ -1,6 +1,6 @@
 package se.jonastrogen.regionstats.models;
 
-class CostModel {
+public class CostModel {
     public String country;
     public double small;
     public double medium;
