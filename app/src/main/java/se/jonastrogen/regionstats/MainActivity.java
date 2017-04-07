@@ -28,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected StatisticsModel doInBackground(Integer... params) {
             try {
+                // Check if we have som new statistics
                 Response<StatisticsModel> model = NodePoleApp.getInstance().getNodePoleService().getStatistics(params[0]).execute();
-                if (model.isSuccessful() && model.body().revision > params[0]) {
+                // We send a 204 No Content if the revision we have is the same as the servers.
+                if (model.isSuccessful() && model.code() != 204) {
                     NodePoleApp.getInstance().saveStatisticsModel(model.body());
                     return model.body();
                 }
