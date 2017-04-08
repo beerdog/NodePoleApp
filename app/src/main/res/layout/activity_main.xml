@@ -59,7 +59,7 @@
             android:id="@+id/emissionResultLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Emission savings"
+            android:text="Emissions"
             android:ems="12"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"/>
@@ -75,7 +75,7 @@
             android:id="@+id/costResultLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cost savings"
+            android:text="Cost per year in Euro"
             android:ems="12"
             android:layout_marginTop="20dp"
             android:layout_below="@id/emissionResultLabel"/>

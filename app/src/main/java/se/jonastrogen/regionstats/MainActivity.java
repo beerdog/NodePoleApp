@@ -61,21 +61,22 @@ public class MainActivity extends AppCompatActivity {
                 CostModel selectedCountry = (CostModel) countrySpinner.getSelectedItem();
                 String selectedSize = (String) consumptionSpinner.getSelectedItem();
 
-                short emission = 0;
-                double cost = 0;
+                int emission = 0;
+                int cost = 0;
 
+                // Multiply cost with kWh
                 switch (selectedSize){
                     case "Small":
-                        emission = (short) (selectedCountry.emissions * 1);
-                        cost = selectedCountry.small;
+                        emission = (short) ((selectedCountry.emissions / 1000.0) * 16000);
+                        cost = (int) (selectedCountry.small * 16000000);
                         break;
                     case "Medium":
-                        emission = (short) (selectedCountry.emissions * 2);
-                        cost = selectedCountry.medium;
+                        emission = (short) ((selectedCountry.emissions / 1000.0) * 40000);
+                        cost = (int) (selectedCountry.medium * 40000000);
                         break;
                     case "Large":
-                        emission = (short) (selectedCountry.emissions * 3);
-                        cost = selectedCountry.large;
+                        emission = (short) ((selectedCountry.emissions / 1000.0) * 120000);
+                        cost = (int) (selectedCountry.large * 120000000);
                         break;
                 }
 
