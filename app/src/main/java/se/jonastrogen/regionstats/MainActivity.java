@@ -3,10 +3,17 @@ package se.jonastrogen.regionstats;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.io.IOException;
 
 import retrofit2.Response;
+import se.jonastrogen.regionstats.models.CostModel;
 import se.jonastrogen.regionstats.models.StatisticsModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +28,62 @@ public class MainActivity extends AppCompatActivity {
         if (NodePoleApp.getInstance().isNetworkAvailable()) {
             new FetchStatistics().execute(model.revision);
         }
+
+        // Setup country spinner
+        final Spinner countrySpinner = (Spinner) findViewById(R.id.countrySpinner);
+        final ArrayAdapter<CostModel> countryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+        countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        for(CostModel cost : model.cost) {
+            countryAdapter.add(cost);
+        }
+        countrySpinner.setAdapter(countryAdapter);
+
+        // Setup size spinner
+        final Spinner consumptionSpinner = (Spinner) findViewById(R.id.consumptionSpinner);
+        final ArrayAdapter<CharSequence> consumptionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+        consumptionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        consumptionAdapter.add("Small");
+        consumptionAdapter.add("Medium");
+        consumptionAdapter.add("Large");
+        consumptionSpinner.setAdapter(consumptionAdapter);
+
+        // Result views
+        final RelativeLayout resultLayout = (RelativeLayout) findViewById(R.id.resultLayout);
+        final TextView emissionText = (TextView) findViewById(R.id.emissionResult);
+        final TextView costText = (TextView) findViewById(R.id.costResult);
+
+        // Connect button
+        Button button = (Button) findViewById(R.id.calculateButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Calculate and show result
+                CostModel selectedCountry = (CostModel) countrySpinner.getSelectedItem();
+                String selectedSize = (String) consumptionSpinner.getSelectedItem();
+
+                short emission = 0;
+                double cost = 0;
+
+                switch (selectedSize){
+                    case "Small":
+                        emission = (short) (selectedCountry.emissions * 1);
+                        cost = selectedCountry.small;
+                        break;
+                    case "Medium":
+                        emission = (short) (selectedCountry.emissions * 2);
+                        cost = selectedCountry.medium;
+                        break;
+                    case "Large":
+                        emission = (short) (selectedCountry.emissions * 3);
+                        cost = selectedCountry.large;
+                        break;
+                }
+
+                emissionText.setText(String.valueOf(emission));
+                costText.setText(String.valueOf(cost));
+            }
+        });
+
     }
 
     private class FetchStatistics extends AsyncTask<Integer, Void, StatisticsModel> {

@@ -1,18 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="se.jonastrogen.regionstats.MainActivity">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="20dp"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="se.jonastrogen.regionstats.MainActivity">
 
     <TextView
+        android:id="@+id/countryLabel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose country"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"/>
+
+    <Spinner
+        android:id="@+id/countrySpinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/countryLabel"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:id="@+id/consumptionLabel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose size"
+        android:ems="10"
+        android:layout_below="@id/countrySpinner"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentLeft="true"/>
+
+    <Spinner
+        android:id="@+id/consumptionSpinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/consumptionLabel"
+        android:layout_alignParentLeft="true"/>
+
+    <Button
+        android:id="@+id/calculateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_below="@+id/consumptionSpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:text="Calculate" />
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/resultLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calculateButton">
+
+        <TextView
+            android:id="@+id/emissionResultLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Emission savings"
+            android:ems="12"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:id="@+id/emissionResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:ems="20"
+            android:layout_below="@id/emissionResultLabel"/>
+
+        <TextView
+            android:id="@+id/costResultLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cost savings"
+            android:ems="12"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/emissionResultLabel"/>
+        <TextView
+            android:id="@+id/costResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:ems="20"
+            android:layout_below="@id/costResultLabel"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+

@@ -6,4 +6,9 @@ public class CostModel {
     public double medium;
     public double large;
     public short emissions;
+
+    @Override
+    public String toString() {
+        return country;
+    }
 }
