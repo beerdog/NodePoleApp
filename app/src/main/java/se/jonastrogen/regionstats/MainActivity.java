@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        StatisticsModel model = NodePoleApp.getInstance().getCurrentStatisticsModel();
+        final StatisticsModel model = NodePoleApp.getInstance().getCurrentStatisticsModel();
 
         if (NodePoleApp.getInstance().isNetworkAvailable()) {
             new FetchStatistics().execute(model.revision);
@@ -68,15 +68,15 @@ public class MainActivity extends AppCompatActivity {
                 switch (selectedSize){
                     case "Small":
                         emission = (short) ((selectedCountry.emissions / 1000.0) * 16000);
-                        cost = (int) (selectedCountry.small * 16000000);
+                        cost = (int) (selectedCountry.small * 2 * 1000 * model.hours);
                         break;
                     case "Medium":
                         emission = (short) ((selectedCountry.emissions / 1000.0) * 40000);
-                        cost = (int) (selectedCountry.medium * 40000000);
+                        cost = (int) (selectedCountry.medium * 5 * 1000 * model.hours);
                         break;
                     case "Large":
                         emission = (short) ((selectedCountry.emissions / 1000.0) * 120000);
-                        cost = (int) (selectedCountry.large * 120000000);
+                        cost = (int) (selectedCountry.large * 15 * 1000 * model.hours);
                         break;
                 }
 
