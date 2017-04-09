@@ -1,93 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="20dp"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context="se.jonastrogen.regionstats.MainActivity">
-
-    <TextView
-        android:id="@+id/countryLabel"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Choose country"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"/>
-
-    <Spinner
-        android:id="@+id/countrySpinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/countryLabel"
-        android:layout_alignParentLeft="true"/>
-
-    <TextView
-        android:id="@+id/consumptionLabel"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Choose size"
-        android:ems="10"
-        android:layout_below="@id/countrySpinner"
-        android:layout_marginTop="40dp"
-        android:layout_alignParentLeft="true"/>
-
-    <Spinner
-        android:id="@+id/consumptionSpinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/consumptionLabel"
-        android:layout_alignParentLeft="true"/>
-
-    <Button
-        android:id="@+id/calculateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/consumptionSpinner"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:text="Calculate" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#ccc"
+    tools:context="se.jonastrogen.regionstats.MainActivity"
+    android:orientation="horizontal">
 
     <RelativeLayout
-        android:id="@+id/resultLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/calculateButton">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/border"
+        android:padding="16dp"
+        android:layout_margin="10dp">
 
         <TextView
-            android:id="@+id/emissionResultLabel"
-            android:layout_width="wrap_content"
+            android:id="@+id/countryLabel"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Emissions"
-            android:ems="12"
+            android:text="Choose country"
+            android:ems="10"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"/>
-        <TextView
-            android:id="@+id/emissionResult"
-            android:layout_width="wrap_content"
+
+        <Spinner
+            android:id="@+id/countrySpinner"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:ems="20"
-            android:layout_below="@id/emissionResultLabel"/>
+            android:layout_below="@+id/countryLabel"
+            android:layout_alignParentLeft="true"/>
 
         <TextView
-            android:id="@+id/costResultLabel"
-            android:layout_width="wrap_content"
+            android:id="@+id/consumptionLabel"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Cost per year in Euro"
-            android:ems="12"
+            android:text="Choose size"
+            android:ems="10"
+            android:layout_below="@id/countrySpinner"
+            android:layout_marginTop="40dp"
+            android:layout_alignParentLeft="true"/>
+
+        <Spinner
+            android:id="@+id/consumptionSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/consumptionLabel"
+            android:layout_alignParentLeft="true"/>
+
+        <Button
+            android:id="@+id/calculateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/consumptionSpinner"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="28dp"
+            android:text="Calculate" />
+
+        <RelativeLayout
+            android:id="@+id/resultLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/emissionResultLabel"/>
-        <TextView
-            android:id="@+id/costResult"
+            android:layout_below="@id/calculateButton">
+
+            <TextView
+                android:id="@+id/emissionResultLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Emissions"
+                android:ems="12"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"/>
+            <TextView
+                android:id="@+id/emissionResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:ems="20"
+                android:layout_below="@id/emissionResultLabel"/>
+
+            <TextView
+                android:id="@+id/costResultLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cost per year in Euro"
+                android:ems="12"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/emissionResultLabel"/>
+            <TextView
+                android:id="@+id/costResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:ems="20"
+                android:layout_below="@id/costResultLabel"/>
+
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:ems="20"
-            android:layout_below="@id/costResultLabel"/>
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            app:srcCompat="@android:drawable/ic_menu_info_details" />
 
     </RelativeLayout>
 
-</RelativeLayout>
-
+</LinearLayout>

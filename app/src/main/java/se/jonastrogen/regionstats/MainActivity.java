@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -29,10 +30,25 @@ public class MainActivity extends AppCompatActivity {
             new FetchStatistics().execute(model.revision);
         }
 
+        final RelativeLayout resultLayout = (RelativeLayout) findViewById(R.id.resultLayout);
+        resultLayout.setVisibility(View.GONE);
+
         // Setup country spinner
         final Spinner countrySpinner = (Spinner) findViewById(R.id.countrySpinner);
+        countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                resultLayout.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         final ArrayAdapter<CostModel> countryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //countryAdapter.add(new CostModel());
         for(CostModel cost : model.cost) {
             countryAdapter.add(cost);
         }
@@ -42,13 +58,13 @@ public class MainActivity extends AppCompatActivity {
         final Spinner consumptionSpinner = (Spinner) findViewById(R.id.consumptionSpinner);
         final ArrayAdapter<CharSequence> consumptionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         consumptionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //consumptionAdapter.add("");
         consumptionAdapter.add("Small");
         consumptionAdapter.add("Medium");
         consumptionAdapter.add("Large");
         consumptionSpinner.setAdapter(consumptionAdapter);
 
         // Result views
-        final RelativeLayout resultLayout = (RelativeLayout) findViewById(R.id.resultLayout);
         final TextView emissionText = (TextView) findViewById(R.id.emissionResult);
         final TextView costText = (TextView) findViewById(R.id.costResult);
 
@@ -82,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
 
                 emissionText.setText(String.valueOf(emission));
                 costText.setText(String.valueOf(cost));
+                resultLayout.setVisibility(View.VISIBLE);
             }
         });
-
     }
 
     private class FetchStatistics extends AsyncTask<Integer, Void, StatisticsModel> {
