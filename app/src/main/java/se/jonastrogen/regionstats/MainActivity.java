@@ -7,9 +7,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -119,6 +121,14 @@ public class MainActivity extends AppCompatActivity {
                 emissionText.setText(String.valueOf(emission));
                 costText.setText(costSavings);
                 resultLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        ImageButton aboutButton = (ImageButton) findViewById(R.id.aboutButton);
+        aboutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Not implemented", Toast.LENGTH_SHORT).show();
             }
         });
     }
