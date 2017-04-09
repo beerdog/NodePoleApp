@@ -56,7 +56,7 @@
             android:layout_below="@+id/consumptionSpinner"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="28dp"
-            android:text="Calculate" />
+            android:text="See your savings" />
 
         <RelativeLayout
             android:id="@+id/resultLayout"
@@ -69,32 +69,36 @@
                 android:id="@+id/emissionResultLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Emissions"
-                android:ems="12"
+                android:gravity="center"
+                android:text="Reduction in emissions"
+                android:textSize="20dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"/>
             <TextView
                 android:id="@+id/emissionResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text=""
-                android:ems="20"
+                android:textSize="36dp"
                 android:layout_below="@id/emissionResultLabel"/>
 
             <TextView
                 android:id="@+id/costResultLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cost per year in Euro"
-                android:ems="12"
+                android:gravity="center"
+                android:text="Savings per year"
+                android:textSize="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_below="@id/emissionResultLabel"/>
+                android:layout_below="@id/emissionResult"/>
             <TextView
                 android:id="@+id/costResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text=""
-                android:ems="20"
+                android:textSize="36dp"
                 android:layout_below="@id/costResultLabel"/>
 
         </RelativeLayout>

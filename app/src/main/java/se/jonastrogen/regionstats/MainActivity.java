@@ -12,6 +12,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import retrofit2.Response;
 import se.jonastrogen.regionstats.models.CostModel;
@@ -25,6 +27,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final StatisticsModel model = NodePoleApp.getInstance().getCurrentStatisticsModel();
+        CostModel costTemp = null;
+        for(CostModel cost : model.cost) {
+            if (cost.country.equalsIgnoreCase("sweden")) {
+                costTemp = cost;
+                break;
+            }
+        }
+        final CostModel costSweden = costTemp;
 
         if (NodePoleApp.getInstance().isNetworkAvailable()) {
             new FetchStatistics().execute(model.revision);
@@ -85,19 +95,29 @@ public class MainActivity extends AppCompatActivity {
                     case "Small":
                         emission = (short) ((selectedCountry.emissions / 1000.0) * 16000);
                         cost = (int) (selectedCountry.small * 2 * 1000 * model.hours);
+                        // Calculate difference to sweden.
+                        emission -= (short) ((costSweden.emissions / 1000.0) * 16000);
+                        cost -= (int) (costSweden.small * 2 * 1000 * model.hours);
                         break;
                     case "Medium":
                         emission = (short) ((selectedCountry.emissions / 1000.0) * 40000);
                         cost = (int) (selectedCountry.medium * 5 * 1000 * model.hours);
+                        emission -= (short) ((costSweden.emissions / 1000.0) * 40000);
+                        cost -= (int) (costSweden.medium * 5 * 1000 * model.hours);
                         break;
                     case "Large":
                         emission = (short) ((selectedCountry.emissions / 1000.0) * 120000);
                         cost = (int) (selectedCountry.large * 15 * 1000 * model.hours);
+                        emission -= (short) ((costSweden.emissions / 1000.0) * 120000);
+                        cost -= (int) (costSweden.large * 15 * 1000 * model.hours);
                         break;
                 }
 
+                NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+                String costSavings = formatter.format(cost);
+
                 emissionText.setText(String.valueOf(emission));
-                costText.setText(String.valueOf(cost));
+                costText.setText(costSavings);
                 resultLayout.setVisibility(View.VISIBLE);
             }
         });
