@@ -152,5 +152,12 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+
+        @Override
+        protected void onPostExecute(StatisticsModel model) {
+            if (model != null) {
+                mStatisticsModel = model;
+            }
+        }
     }
 }
