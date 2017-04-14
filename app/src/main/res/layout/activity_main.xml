@@ -42,28 +42,21 @@
             android:layout_marginTop="40dp"
             android:layout_alignParentLeft="true"/>
 
-        <Spinner
-            android:id="@+id/consumptionSpinner"
+        <SeekBar
+            android:id="@+id/consumptionBar"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/consumptionLabel"
-            android:layout_alignParentLeft="true"/>
-
-        <Button
-            android:id="@+id/calculateButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/consumptionSpinner"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="28dp"
-            android:text="See your savings" />
+            android:max="2"
+            android:progress="1" />
 
         <RelativeLayout
             android:id="@+id/resultLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_below="@id/calculateButton">
+            android:layout_below="@id/consumptionBar">
 
             <TextView
                 android:id="@+id/emissionResultLabel"

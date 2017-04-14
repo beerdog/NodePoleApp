@@ -6,9 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,34 +22,37 @@ import se.jonastrogen.regionstats.models.StatisticsModel;
 
 public class MainActivity extends AppCompatActivity {
 
+    private int mSeekbarValue;
+    private Spinner mCountrySpinner;
+    private TextView mEmissionText;
+    private TextView mCostText;
+    private CostModel mCostSweden;
+    private StatisticsModel mStatisticsModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final StatisticsModel model = NodePoleApp.getInstance().getCurrentStatisticsModel();
-        CostModel costTemp = null;
-        for(CostModel cost : model.cost) {
+        mStatisticsModel = NodePoleApp.getInstance().getCurrentStatisticsModel();
+
+        for(CostModel cost : mStatisticsModel.cost) {
             if (cost.country.equalsIgnoreCase("sweden")) {
-                costTemp = cost;
+                mCostSweden = cost;
                 break;
             }
         }
-        final CostModel costSweden = costTemp;
 
         if (NodePoleApp.getInstance().isNetworkAvailable()) {
-            new FetchStatistics().execute(model.revision);
+            new FetchStatistics().execute(mStatisticsModel.revision);
         }
 
-        final RelativeLayout resultLayout = (RelativeLayout) findViewById(R.id.resultLayout);
-        resultLayout.setVisibility(View.GONE);
-
         // Setup country spinner
-        final Spinner countrySpinner = (Spinner) findViewById(R.id.countrySpinner);
-        countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mCountrySpinner = (Spinner) findViewById(R.id.countrySpinner);
+        mCountrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                resultLayout.setVisibility(View.GONE);
+                updateCalculations();
             }
 
             @Override
@@ -58,70 +60,32 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        final ArrayAdapter<CostModel> countryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CostModel> countryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //countryAdapter.add(new CostModel());
-        for(CostModel cost : model.cost) {
+        for(CostModel cost : mStatisticsModel.cost) {
             countryAdapter.add(cost);
         }
-        countrySpinner.setAdapter(countryAdapter);
-
-        // Setup size spinner
-        final Spinner consumptionSpinner = (Spinner) findViewById(R.id.consumptionSpinner);
-        final ArrayAdapter<CharSequence> consumptionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
-        consumptionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //consumptionAdapter.add("");
-        consumptionAdapter.add("Small");
-        consumptionAdapter.add("Medium");
-        consumptionAdapter.add("Large");
-        consumptionSpinner.setAdapter(consumptionAdapter);
+        mCountrySpinner.setAdapter(countryAdapter);
 
         // Result views
-        final TextView emissionText = (TextView) findViewById(R.id.emissionResult);
-        final TextView costText = (TextView) findViewById(R.id.costResult);
+        mEmissionText = (TextView) findViewById(R.id.emissionResult);
+        mCostText = (TextView) findViewById(R.id.costResult);
 
-        // Connect button
-        Button button = (Button) findViewById(R.id.calculateButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        final SeekBar seekBar = (SeekBar) findViewById(R.id.consumptionBar);
+        mSeekbarValue = seekBar.getProgress();
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onClick(View v) {
-                // Calculate and show result
-                CostModel selectedCountry = (CostModel) countrySpinner.getSelectedItem();
-                String selectedSize = (String) consumptionSpinner.getSelectedItem();
-
-                int emission = 0;
-                int cost = 0;
-
-                // Multiply cost with kWh
-                switch (selectedSize){
-                    case "Small":
-                        emission = (short) ((selectedCountry.emissions / 1000.0) * 16000);
-                        cost = (int) (selectedCountry.small * 2 * 1000 * model.hours);
-                        // Calculate difference to sweden.
-                        emission -= (short) ((costSweden.emissions / 1000.0) * 16000);
-                        cost -= (int) (costSweden.small * 2 * 1000 * model.hours);
-                        break;
-                    case "Medium":
-                        emission = (short) ((selectedCountry.emissions / 1000.0) * 40000);
-                        cost = (int) (selectedCountry.medium * 5 * 1000 * model.hours);
-                        emission -= (short) ((costSweden.emissions / 1000.0) * 40000);
-                        cost -= (int) (costSweden.medium * 5 * 1000 * model.hours);
-                        break;
-                    case "Large":
-                        emission = (short) ((selectedCountry.emissions / 1000.0) * 120000);
-                        cost = (int) (selectedCountry.large * 15 * 1000 * model.hours);
-                        emission -= (short) ((costSweden.emissions / 1000.0) * 120000);
-                        cost -= (int) (costSweden.large * 15 * 1000 * model.hours);
-                        break;
-                }
-
-                NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.GERMANY);
-                String costSavings = formatter.format(cost);
-
-                emissionText.setText(String.valueOf(emission));
-                costText.setText(costSavings);
-                resultLayout.setVisibility(View.VISIBLE);
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mSeekbarValue = progress;
+                updateCalculations();
             }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
         ImageButton aboutButton = (ImageButton) findViewById(R.id.aboutButton);
@@ -131,6 +95,44 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Not implemented", Toast.LENGTH_SHORT).show();
             }
         });
+
+        updateCalculations();
+    }
+
+    private void updateCalculations() {
+        CostModel selectedCountry = (CostModel) mCountrySpinner.getSelectedItem();
+
+        int emission = 0;
+        int cost = 0;
+
+        // Multiply cost with kWh
+        switch (mSeekbarValue){
+            case 0:
+                emission = (short) ((selectedCountry.emissions / 1000.0) * 16000);
+                cost = (int) (selectedCountry.small * 2 * 1000 * mStatisticsModel.hours);
+                // Calculate difference to sweden.
+                emission -= (short) ((mCostSweden.emissions / 1000.0) * 16000);
+                cost -= (int) (mCostSweden.small * 2 * 1000 * mStatisticsModel.hours);
+                break;
+            case 1:
+                emission = (short) ((selectedCountry.emissions / 1000.0) * 40000);
+                cost = (int) (selectedCountry.medium * 5 * 1000 * mStatisticsModel.hours);
+                emission -= (short) ((mCostSweden.emissions / 1000.0) * 40000);
+                cost -= (int) (mCostSweden.medium * 5 * 1000 * mStatisticsModel.hours);
+                break;
+            case 2:
+                emission = (short) ((selectedCountry.emissions / 1000.0) * 120000);
+                cost = (int) (selectedCountry.large * 15 * 1000 * mStatisticsModel.hours);
+                emission -= (short) ((mCostSweden.emissions / 1000.0) * 120000);
+                cost -= (int) (mCostSweden.large * 15 * 1000 * mStatisticsModel.hours);
+                break;
+        }
+
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.GERMANY);
+        String costSavings = formatter.format(cost);
+
+        mEmissionText.setText(String.valueOf(emission));
+        mCostText.setText(costSavings);
     }
 
     private class FetchStatistics extends AsyncTask<Integer, Void, StatisticsModel> {
