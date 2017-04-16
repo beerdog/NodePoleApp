@@ -51,11 +51,33 @@
             android:max="2"
             android:progress="1" />
 
+        <TextView
+            android:id="@+id/spinnerLabelSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 MW"
+            android:layout_below="@id/consumptionBar"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5 MW"
+            android:layout_below="@id/consumptionBar"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15 MW"
+            android:layout_below="@id/consumptionBar"
+            android:layout_alignParentRight="true" />
+
         <RelativeLayout
             android:id="@+id/resultLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:layout_below="@id/consumptionBar">
 
             <TextView
@@ -63,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Reduction in emissions"
+                android:text="Reduction in CO2 emissions"
                 android:textSize="20dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"/>

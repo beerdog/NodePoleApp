@@ -102,36 +102,36 @@ public class MainActivity extends AppCompatActivity {
     private void updateCalculations() {
         CostModel selectedCountry = (CostModel) mCountrySpinner.getSelectedItem();
 
-        int emission = 0;
-        int cost = 0;
+        long emission = 0;
+        long cost = 0;
 
         // Multiply cost with kWh
         switch (mSeekbarValue){
             case 0:
-                emission = (short) ((selectedCountry.emissions / 1000.0) * 16000);
-                cost = (int) (selectedCountry.small * 2 * 1000 * mStatisticsModel.hours);
+                emission = (long) ((selectedCountry.emissions / 1000.0) * 16000);
+                cost = (long) (selectedCountry.small * 2 * 1000 * mStatisticsModel.hours);
                 // Calculate difference to sweden.
-                emission -= (short) ((mCostSweden.emissions / 1000.0) * 16000);
-                cost -= (int) (mCostSweden.small * 2 * 1000 * mStatisticsModel.hours);
+                emission -= (long) ((mCostSweden.emissions / 1000.0) * 16000);
+                cost -= (long) (mCostSweden.small * 2 * 1000 * mStatisticsModel.hours);
                 break;
             case 1:
-                emission = (short) ((selectedCountry.emissions / 1000.0) * 40000);
-                cost = (int) (selectedCountry.medium * 5 * 1000 * mStatisticsModel.hours);
-                emission -= (short) ((mCostSweden.emissions / 1000.0) * 40000);
-                cost -= (int) (mCostSweden.medium * 5 * 1000 * mStatisticsModel.hours);
+                emission = (long) ((selectedCountry.emissions / 1000.0) * 40000);
+                cost = (long) (selectedCountry.medium * 5 * 1000 * mStatisticsModel.hours);
+                emission -= (long) ((mCostSweden.emissions / 1000.0) * 40000);
+                cost -= (long) (mCostSweden.medium * 5 * 1000 * mStatisticsModel.hours);
                 break;
             case 2:
-                emission = (short) ((selectedCountry.emissions / 1000.0) * 120000);
-                cost = (int) (selectedCountry.large * 15 * 1000 * mStatisticsModel.hours);
-                emission -= (short) ((mCostSweden.emissions / 1000.0) * 120000);
-                cost -= (int) (mCostSweden.large * 15 * 1000 * mStatisticsModel.hours);
+                emission = (long) ((selectedCountry.emissions / 1000.0) * 120000);
+                cost = (long) (selectedCountry.large * 15 * 1000 * mStatisticsModel.hours);
+                emission -= (long) ((mCostSweden.emissions / 1000.0) * 120000);
+                cost -= (long) (mCostSweden.large * 15 * 1000 * mStatisticsModel.hours);
                 break;
         }
 
         NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.GERMANY);
         String costSavings = formatter.format(cost);
 
-        mEmissionText.setText(String.valueOf(emission));
+        mEmissionText.setText(String.valueOf(emission) + " metric tons");
         mCostText.setText(costSavings);
     }
 
