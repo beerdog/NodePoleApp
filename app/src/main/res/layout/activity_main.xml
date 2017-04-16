@@ -13,80 +13,83 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/border"
-        android:padding="16dp"
+        android:padding="0dp"
         android:layout_margin="14dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:alpha="0.2"
-            android:src="@mipmap/background" />
-
-        <TextView
-            android:id="@+id/countryLabel"
+        <RelativeLayout
+            android:id="@+id/selectionWrapper"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Choose country"
-            android:ems="10"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"/>
+            android:padding="16dp"
+            android:layout_margin="0dp">
 
-        <Spinner
-            android:id="@+id/countrySpinner"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/countryLabel"
-            android:layout_alignParentLeft="true"/>
+            <TextView
+                android:id="@+id/countryLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose country"
+                android:ems="10"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"/>
 
-        <TextView
-            android:id="@+id/consumptionLabel"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Choose size"
-            android:ems="10"
-            android:layout_below="@id/countrySpinner"
-            android:layout_marginTop="40dp"
-            android:layout_alignParentLeft="true"/>
+            <Spinner
+                android:id="@+id/countrySpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/countryLabel"
+                android:layout_alignParentLeft="true"/>
 
-        <SeekBar
-            android:id="@+id/consumptionBar"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/consumptionLabel"
-            android:max="2"
-            android:progress="1" />
+            <TextView
+                android:id="@+id/consumptionLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose size"
+                android:ems="10"
+                android:layout_below="@id/countrySpinner"
+                android:layout_marginTop="40dp"
+                android:layout_alignParentLeft="true"/>
 
-        <TextView
-            android:id="@+id/spinnerLabelSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2 MW"
-            android:layout_below="@id/consumptionBar"
-            android:layout_alignParentLeft="true"/>
+            <SeekBar
+                android:id="@+id/consumptionBar"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/consumptionLabel"
+                android:max="2"
+                android:progress="1" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5 MW"
-            android:layout_below="@id/consumptionBar"
-            android:layout_centerHorizontal="true" />
+            <TextView
+                android:id="@+id/spinnerLabelSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2 MW"
+                android:layout_below="@id/consumptionBar"
+                android:layout_alignParentLeft="true"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="15 MW"
-            android:layout_below="@id/consumptionBar"
-            android:layout_alignParentRight="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 MW"
+                android:layout_below="@id/consumptionBar"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15 MW"
+                android:layout_below="@id/consumptionBar"
+                android:layout_alignParentRight="true" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/resultLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_below="@id/consumptionBar">
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="10dp"
+            android:padding="16dp"
+            android:layout_below="@id/selectionWrapper">
 
             <TextView
                 android:id="@+id/emissionResultLabel"
@@ -95,6 +98,7 @@
                 android:gravity="center"
                 android:text="Reduction in CO2 emissions"
                 android:textSize="20dp"
+                android:textColor="#fff"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"/>
             <TextView
@@ -104,6 +108,7 @@
                 android:gravity="center"
                 android:text=""
                 android:textSize="36dp"
+                android:textColor="#fff"
                 android:layout_below="@id/emissionResultLabel"/>
 
             <TextView
@@ -113,6 +118,7 @@
                 android:gravity="center"
                 android:text="Savings per year"
                 android:textSize="20dp"
+                android:textColor="#fff"
                 android:layout_marginTop="20dp"
                 android:layout_below="@id/emissionResult"/>
             <TextView
@@ -122,6 +128,7 @@
                 android:gravity="center"
                 android:text=""
                 android:textSize="36dp"
+                android:textColor="#fff"
                 android:layout_below="@id/costResultLabel"/>
 
         </RelativeLayout>
