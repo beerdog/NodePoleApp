@@ -1,6 +1,7 @@
 package se.jonastrogen.regionstats;
 
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        ImageButton aboutButton = (ImageButton) findViewById(R.id.aboutButton);
+        FloatingActionButton aboutButton = (FloatingActionButton) findViewById(R.id.aboutButton);
         aboutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

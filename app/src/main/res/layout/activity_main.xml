@@ -14,7 +14,15 @@
         android:layout_height="fill_parent"
         android:background="@drawable/border"
         android:padding="16dp"
-        android:layout_margin="10dp">
+        android:layout_margin="14dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.2"
+            android:src="@mipmap/background" />
 
         <TextView
             android:id="@+id/countryLabel"
@@ -118,15 +126,22 @@
 
         </RelativeLayout>
 
-        <ImageButton
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/aboutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@null"
-            app:srcCompat="@android:drawable/ic_menu_info_details" />
+            android:layout_marginBottom="14dp"
+            android:layout_marginRight="14dp"
+            android:clickable="true"
+            app:backgroundTint="@color/colorPrimary"
+            app:elevation="5dp"
+            app:fabSize="normal"
+            app:rippleColor="@android:color/background_light"
+            app:srcCompat="@android:drawable/ic_menu_help" />
+
 
     </RelativeLayout>
 
