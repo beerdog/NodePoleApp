@@ -146,8 +146,10 @@
             app:backgroundTint="@android:color/background_light"
             app:elevation="5dp"
             app:fabSize="normal"
+            android:scaleType="center"
             app:rippleColor="@color/colorPrimary"
-            app:srcCompat="@android:drawable/ic_menu_help" />
+            android:tint="#FFec008c"
+            app:srcCompat="@mipmap/ic_info_outline_black_36dp" />
 
 
     </RelativeLayout>
