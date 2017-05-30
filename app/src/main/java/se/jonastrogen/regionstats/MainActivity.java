@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Get the statistics from database.
         mStatisticsModel = NodePoleApp.getInstance().getCurrentStatisticsModel();
 
         for(CostModel cost : mStatisticsModel.cost) {
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        // If we have an internet connection we check with the server if there is any new statistics.
         if (NodePoleApp.getInstance().isNetworkAvailable()) {
             new FetchStatistics().execute(mStatisticsModel.revision);
         }
@@ -57,13 +59,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
+
         ArrayAdapter<CostModel> countryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //countryAdapter.add(new CostModel());
         for(CostModel cost : mStatisticsModel.cost) {
             countryAdapter.add(cost);
         }
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         mEmissionText = (TextView) findViewById(R.id.emissionResult);
         mCostText = (TextView) findViewById(R.id.costResult);
 
+        // Setup size seekbar.
         final SeekBar seekBar = (SeekBar) findViewById(R.id.consumptionBar);
         mSeekbarValue = seekBar.getProgress();
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -89,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
+        // Setup about button, not yet implemented.
+        // It should flip the view and show information about the statistics that is used.
         FloatingActionButton aboutButton = (FloatingActionButton) findViewById(R.id.aboutButton);
         aboutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Show some initial results.
         updateCalculations();
     }
 
@@ -156,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(StatisticsModel model) {
+            // Use the new values for the next calculation.
             if (model != null) {
                 mStatisticsModel = model;
             }

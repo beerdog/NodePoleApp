@@ -38,6 +38,7 @@ public class NodePoleApp extends Application {
         _mDbHelper = new NodePoleDbHelper(this);
         _gson = new Gson();
 
+        // Setup webapi endpoint.
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://nodepole.azurewebsites.net/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -54,21 +55,39 @@ public class NodePoleApp extends Application {
         return _nodePoleService;
     }
 
+    /**
+     * Get the statistics from database.
+     * @return
+     */
     public StatisticsModel getCurrentStatisticsModel() {
         SQLiteDatabase db = _mDbHelper.getReadableDatabase();
-        Cursor cursor = db.query("statistics", new String[]{"revision", "hours", "cost"}, null, null, null, null, null);
-        if (cursor.moveToNext()) {
-            StatisticsModel model = new StatisticsModel();
-            model.revision = cursor.getInt(cursor.getColumnIndexOrThrow("revision"));
-            model.hours = cursor.getInt(cursor.getColumnIndexOrThrow("hours"));
-            String cost = cursor.getString(cursor.getColumnIndexOrThrow("cost"));
-            Type type = new TypeToken<ArrayList<CostModel>>() {}.getType();
-            model.cost = _gson.fromJson(cost, type);
-            return model;
+        Cursor cursor = null;
+        try {
+            cursor = db.query("statistics", new String[]{"revision", "hours", "cost"}, null, null, null, null, null);
+            if (cursor.moveToNext()) {
+                StatisticsModel model = new StatisticsModel();
+                model.revision = cursor.getInt(cursor.getColumnIndexOrThrow("revision"));
+                model.hours = cursor.getInt(cursor.getColumnIndexOrThrow("hours"));
+                String cost = cursor.getString(cursor.getColumnIndexOrThrow("cost"));
+                Type type = new TypeToken<ArrayList<CostModel>>() {
+                }.getType();
+                model.cost = _gson.fromJson(cost, type);
+                return model;
+            }
+        } catch (Exception e) {
+            Log.e("NodePole", "isNetworkAvailable():" + e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
         return null;
     }
 
+    /**
+     * Write the updated statistics model to the database.
+     * @param model
+     */
     public void saveStatisticsModel(StatisticsModel model) {
         SQLiteDatabase db = _mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
